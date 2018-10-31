@@ -1,5 +1,7 @@
 # Movie Tracker
 
+#### Track some movies! || https://jareds-movie-tracker.surge.sh
+
 ## Synopsis
 #### Movie Tracker is a group project done in module 3 at Turing School of Software and Design. This project reinforced our abilities to create modular React components and test React using Jest and Enzyme. Movie Tracker also introduced us to Redux and Router. We used the MovieDB API to get release dates, synopses and information about about current movies.
 

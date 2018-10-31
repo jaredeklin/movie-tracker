@@ -59,6 +59,7 @@ ShallowWrapper {
           </button>
 </form>,
         false,
+        false,
       ],
     },
     "ref": null,
@@ -167,6 +168,7 @@ ShallowWrapper {
         "type": "form",
       },
       false,
+      false,
     ],
     "type": "div",
   },
@@ -210,6 +212,7 @@ ShallowWrapper {
                         Submit
             </button>
 </form>,
+          false,
           false,
         ],
       },
@@ -318,6 +321,7 @@ ShallowWrapper {
           ],
           "type": "form",
         },
+        false,
         false,
       ],
       "type": "div",

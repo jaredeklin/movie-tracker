@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import './SignUp.css';
 import { logInUser } from '../../actions';
 import PropTypes from 'prop-types';
+import Loading from '../../components/Loading/Loading';
 
 const url = process.env.REACT_APP_DATABASE_URL;
 
@@ -14,12 +15,14 @@ export class SignUp extends Component {
       name: '',
       email: '',
       password: '',
-      signUpError: false
+      signUpError: false,
+      loading: false
     };
   }
  
   handleFetch = async (userInfo) => { 
     try {
+      this.setState({ loading: true });
       const response = await fetch(`${url}/api/v1/users`, {
         method: "POST",
         body: JSON.stringify(userInfo),
@@ -27,11 +30,11 @@ export class SignUp extends Component {
           'content-type': 'application/json'
         }
       });
+      this.setState({ loading: false });
 
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-
       const newAccount = await response.json();
       const { id, name } = newAccount;
 
@@ -93,8 +96,8 @@ export class SignUp extends Component {
           />
           <button className='submit'>Submit</button>
         </form>
-        { 
-          this.state.signUpError &&
+        { this.state.loading && <Loading /> }
+        { this.state.signUpError &&
             <section>
               <p>This email has already been used</p>
               <NavLink to="/login">Already a member?</NavLink>

@@ -116,7 +116,8 @@ describe('SignUp', () => {
         name: '',
         email: '',
         password: '',
-        signUpError: false
+        signUpError: false,
+        loading: false
       };
       wrapper.instance().handleFetch = jest.fn();
   

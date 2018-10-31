@@ -3,6 +3,7 @@ import { App, mapStateToProps, mapDispatchToProps } from './App';
 import { mockUser } from '../../cleaners/mockData';
 import { shallow } from 'enzyme';
 import { getNowPlaying } from '../../cleaners/getNowPlaying';
+import { Home } from '../../components/Home/Home';
 
 jest.mock('../../cleaners/getNowPlaying');
 
@@ -75,7 +76,6 @@ describe('App', () => {
 
   it('should render showHome when pathname is favorite', () => {
     mockLocation={pathname: '/favorites'};
-
     wrapper = shallow(<App 
       user={mockUser}
       loadMovies={mockLoadMovies}
@@ -87,6 +87,49 @@ describe('App', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('should render the Home component with correct props when path is favorite', () => {
+    mockLocation = { pathname: '/favorites' };
+    const mockFavorites = [];
+
+    wrapper = shallow(<App
+      user={mockUser}
+      location={mockLocation}
+      favorites={mockFavorites}
+    />, { disableLifecycleMethods: true });
+
+    const expected = <Home movies={mockFavorites} favorites={mockFavorites} />;
+
+    expect(
+      wrapper
+        .find('Route')
+        .at(3)
+        .props()
+        .render()
+    ).toEqual(expected);
+  });
+
+  it('should render the Home component with correct props when path is /', () => {
+    mockLocation = { pathname: '/' };
+    const mockFavorites = ['test'];
+    const mockMovies = ['test2'];
+
+    wrapper = shallow(<App
+      user={mockUser}
+      location={mockLocation}
+      movies={mockMovies}
+      favorites={mockFavorites}
+    />, { disableLifecycleMethods: true });
+
+    const expected = <Home movies={mockMovies} favorites={mockFavorites} />;
+
+    expect(
+      wrapper
+        .find('Route')
+        .at(0)
+        .props()
+        .render()
+    ).toEqual(expected);
+  });
 });
 
 

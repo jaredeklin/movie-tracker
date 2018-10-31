@@ -5,6 +5,7 @@ import './Login.css';
 import { logInUser, addAllFavorites } from '../../actions';
 import { loadAllFavorites } from '../../cleaners/loadAllFavorites.js';
 import PropTypes from 'prop-types';
+import Loading from '../../components/Loading/Loading';
 
 const url = process.env.REACT_APP_DATABASE_URL;
 
@@ -14,7 +15,8 @@ export class Login extends Component {
     this.state = {
       email: '',
       password: '',
-      error: false
+      error: false,
+      loading: false
     };
   }
 
@@ -28,7 +30,9 @@ export class Login extends Component {
     const user = JSON.stringify(userInfo);
 
     try {
+      this.setState({ loading: true });
       const response = await fetch(`${url}/api/v1/users/${user}`);
+      this.setState({ loading: false });
 
       if (!response.ok) {
         throw new Error(response.statusText);
@@ -49,7 +53,7 @@ export class Login extends Component {
   }
 
   redirectUser = (id, name) => {
-    this.props.handleSubmit(id, name);
+    this.props.logInUser(id, name);
     const path = "/";
     this.props.history.push(path);
   }
@@ -76,6 +80,7 @@ export class Login extends Component {
           />
           <button className='submit'>Submit</button>
         </form>
+        { this.state.loading && <Loading /> }
         { this.state.error &&
             <section>
               <p>Email and password do not match, please try again.</p>
@@ -95,7 +100,7 @@ export const mapStateToProps = (state) => {
 
 export const mapDispatchToProps = (dispatch) => {
   return {
-    handleSubmit: (id, name) => (dispatch(logInUser(id, name))),
+    logInUser: (id, name) => (dispatch(logInUser(id, name))),
     addAllFavorites: (movies) => (dispatch(addAllFavorites(movies)))
   };
 };  
@@ -104,6 +109,6 @@ export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
 
 Login.propTypes = {
   history: PropTypes.object,
-  handleSubmit: PropTypes.func,
+  logInUser: PropTypes.func,
   addAllFavorites: PropTypes.func
 };

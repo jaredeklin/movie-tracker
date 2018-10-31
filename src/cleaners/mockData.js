@@ -108,6 +108,15 @@ export const mockMovieProp = [{
   "vote_count" : "3582"
 }];    
 
+export const mockCleanedNowPlaying = [{
+  "movie_id": "284054",
+  "overview": "King T'Challa returns home from America to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne by factions within his own country as well as without.  Using powers reserved to Wakandan kings, T'Challa assumes the Black Panther mantel to join with girlfriend Nakia, the queen-mother, his princess-kid sister,  members of the Dora Milaje (the Wakandan 'special forces'), and an American secret agent, to prevent Wakanda from being dragged into a world war.",
+  "poster_path": "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+  "release_date": "2018-02-13",
+  "title": "Black Panther",
+  "vote_average": "7.4",
+}]
+
 export const mockCleanNowPlaying = [{
    "movie_id": "284054",
    "overview": "King T'Challa returns home from America to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne by factions within his own country as well as without.  Using powers reserved to Wakandan kings, T'Challa assumes the Black Panther mantel to join with girlfriend Nakia, the queen-mother, his princess-kid sister,  members of the Dora Milaje (the Wakandan 'special forces'), and an American secret agent, to prevent Wakanda from being dragged into a world war.",
@@ -115,6 +124,22 @@ export const mockCleanNowPlaying = [{
     "release_date": "2018-02-13",
    "title": "Black Panther",
    "vote_average": "7.4",
+}, {
+    "movie_id": "284000",
+    "overview": "King T'Challa returns home from America to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne by factions within his own country as well as without.  Using powers reserved to Wakandan kings, T'Challa assumes the Black Panther mantel to join with girlfriend Nakia, the queen-mother, his princess-kid sister,  members of the Dora Milaje (the Wakandan 'special forces'), and an American secret agent, to prevent Wakanda from being dragged into a world war.",
+    "poster_path": "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+    "release_date": "2018-02-13",
+    "title": "Black Panther",
+    "vote_average": "7.4",
+}]
+
+export const mockFavorites = [{
+  "movie_id": "284054",
+  "overview": "King T'Challa returns home from America to the reclusive, technologically advanced African nation of Wakanda to serve as his country's new leader. However, T'Challa soon finds that he is challenged for the throne by factions within his own country as well as without.  Using powers reserved to Wakandan kings, T'Challa assumes the Black Panther mantel to join with girlfriend Nakia, the queen-mother, his princess-kid sister,  members of the Dora Milaje (the Wakandan 'special forces'), and an American secret agent, to prevent Wakanda from being dragged into a world war.",
+  "poster_path": "/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+  "release_date": "2018-02-13",
+  "title": "Black Panther",
+  "vote_average": "7.4",
 }]
 
 export const mockCleanMovie = [{

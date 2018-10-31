@@ -1,11 +1,10 @@
 import { cleanMovies } from './getNowPlaying.js';
-import { mockMovie, mockCleanNowPlaying } from './mockData';
+import { mockMovie, mockCleanedNowPlaying } from './mockData';
 
 
 describe('data cleaner', () => {
-
   it('should return clean movie data', () => {
-    expect(cleanMovies(mockMovie)).toEqual(mockCleanNowPlaying); 
+    expect(cleanMovies(mockMovie)).toEqual(mockCleanedNowPlaying); 
   });
 
 });

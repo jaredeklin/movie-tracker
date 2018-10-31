@@ -1,6 +1,8 @@
 import { addToFavorites } from './addToFavorites.js';
 import { mockCleanMovie } from './mockData.js';
 
+const url = process.env.REACT_APP_DATABASE_URL;
+
 describe('addToFavorites', () => {
 
   it('should add to favorites', () => {
@@ -10,7 +12,7 @@ describe('addToFavorites', () => {
     }));
     
   
-    const expected = ["/api/users/favorites/new", 
+    const expected = [`${url}/api/v1/favorites`, 
       {
         method: "POST",
         body: JSON.stringify(mockCleanMovie),

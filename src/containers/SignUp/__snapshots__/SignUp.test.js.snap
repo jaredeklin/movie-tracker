@@ -4,7 +4,14 @@ exports[`SignUp should match the snapshot 1`] = `
 ShallowWrapper {
   "length": 1,
   Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <SignUp />,
+  Symbol(enzyme.__unrendered__): <SignUp
+    history={
+        Object {
+            "push": [Function],
+          }
+    }
+    logInUser={[Function]}
+/>,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],
     "getNode": [Function],
@@ -51,7 +58,6 @@ ShallowWrapper {
                     Submit
           </button>
 </form>,
-        false,
         false,
       ],
     },
@@ -161,7 +167,6 @@ ShallowWrapper {
         "type": "form",
       },
       false,
-      false,
     ],
     "type": "div",
   },
@@ -205,7 +210,6 @@ ShallowWrapper {
                         Submit
             </button>
 </form>,
-          false,
           false,
         ],
       },
@@ -314,7 +318,6 @@ ShallowWrapper {
           ],
           "type": "form",
         },
-        false,
         false,
       ],
       "type": "div",

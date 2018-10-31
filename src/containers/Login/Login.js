@@ -6,6 +6,8 @@ import { logInUser, addAllFavorites } from '../../actions';
 import { loadAllFavorites } from '../../cleaners/loadAllFavorites.js';
 import PropTypes from 'prop-types';
 
+const url = process.env.REACT_APP_DATABASE_URL;
+
 export class Login extends Component {
   constructor() {
     super();
@@ -23,19 +25,19 @@ export class Login extends Component {
   }
 
   logIn = async (userInfo) => {
+    const user = JSON.stringify(userInfo);
+
     try {
-      const response = await fetch('/api/users', {
-        method: "POST",
-        body: JSON.stringify(userInfo),
-        headers: {
-          'content-type': 'application/json'
-        }
-      });
+      const response = await fetch(`${url}/api/v1/users/${user}`);
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+
       const logInData = await response.json();
-      
-      this.redirectUser(logInData.data.id, logInData.data.name);
-      this.showFavorites(logInData.data.id);
-    } catch (error){
+      this.redirectUser(logInData.id, logInData.name);
+      this.showFavorites(logInData.id);
+    } catch (error) {
       this.setState({error: true});
     }
   }
@@ -101,7 +103,7 @@ export const mapDispatchToProps = (dispatch) => {
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
 
 Login.propTypes = {
-  history: PropTypes.array,
+  history: PropTypes.object,
   handleSubmit: PropTypes.func,
   addAllFavorites: PropTypes.func
 };

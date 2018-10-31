@@ -10,42 +10,38 @@ export class Card extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loggedIn: false
-    };
-    this.userMovie = {
-      ...this.props.movieInfo, 
-      user_id: this.props.user.id
+      showSynopsis: true
     };
   }
 
-  addFavoritesToStore = (userMovie) => {
-
+  addFavoritesToStore = async (userMovie) => {
+    const { movieInfo, user, addFavorite, removeFavorite } = this.props;
     const isInFavorites = this.props.favorites
-      .filter(favorite => favorite.movie_id === this.props.movieInfo.movie_id);
-
-    if (!isInFavorites.length) {
-      addToFavorites(userMovie);
-      this.props.addFavorite(userMovie);
+      .find(favorite => favorite.movie_id === movieInfo.movie_id);
+    
+    if (!isInFavorites) {
+      await addToFavorites(userMovie);
+      addFavorite(userMovie);
     } else {
-      this.props.removeFavorite(this.props.movieInfo.movie_id);
-      removeFromFavorites(this.props.user.id, this.props.movieInfo.movie_id);
+      removeFavorite(movieInfo.movie_id);
+      removeFromFavorites(user.id, movieInfo.movie_id);
     }
   };
 
   validateUser = () => { 
-    if (!this.props.user.id) {
-      this.setState({ loggedIn: !this.state.loggedIn });
-    } else {
-      this.addFavoritesToStore(this.userMovie);
+    const { user, movieInfo } = this.props;
+    
+    if (!user.id) {
+      this.setState({ showSynopsis: false });
+      setTimeout(() => this.setState({ showSynopsis: true }), 2000);
+    } else {     
+      const userMovie = { ...movieInfo, user_id: user.id };
+      this.addFavoritesToStore(userMovie);
     }
   };
 
   render () {
-    const { poster_path, 
-      title, 
-      overview, 
-      vote_average 
-    } = this.props.movieInfo;
+    const { poster_path, title, overview, vote_average } = this.props.movieInfo;
 
     return (
       <div className='card'>
@@ -54,14 +50,14 @@ export class Card extends Component {
           alt='movie poster' />
         <div className='card-details'>
           {
-            !this.state.loggedIn &&
+            this.state.showSynopsis &&
               <div>
                 <h2 className='title'>{title}</h2>
                 <p className='card-synopsis'>{overview}</p>
               </div>
           }
           {
-            this.state.loggedIn &&
+            !this.state.showSynopsis &&
               <h2 className='card-synopsis error'>
                 Login to your account to add favorites
               </h2>

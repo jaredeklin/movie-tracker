@@ -1,38 +1,45 @@
 import React, {Component} from 'react';
-import { Redirect, NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import './SignUp.css';
+import { logInUser } from '../../actions';
+import PropTypes from 'prop-types';
 
-class SignUp extends Component {
+const url = process.env.REACT_APP_DATABASE_URL;
+
+export class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       email: '',
       password: '',
-      authenticated: false,
       signUpError: false
     };
   }
-
-  handleFetch = async (state) => {
+ 
+  handleFetch = async (userInfo) => { 
     try {
-      const response = await fetch('/api/users/new', {
+      const response = await fetch(`${url}/api/v1/users`, {
         method: "POST",
-        body: JSON.stringify(state),
+        body: JSON.stringify(userInfo),
         headers: {
           'content-type': 'application/json'
         }
       });
-      const newAccount = await response.json();
-     
-      if (newAccount.error) {
-        this.setState({ signUpError: true });
-      } else {
-        this.setState({ authenticated: true });
+
+      if (!response.ok) {
+        throw new Error(response.statusText);
       }
 
+      const newAccount = await response.json();
+      const { id, name } = newAccount;
+
+      this.props.logInUser(id, name);
+      this.props.history.push('/');
+      
     } catch (error) {
-      alert(error);
+      this.setState({ signUpError: true });
     }
   }
 
@@ -93,13 +100,20 @@ class SignUp extends Component {
               <NavLink to="/login">Already a member?</NavLink>
             </section>
         }
-        {
-          this.state.authenticated && 
-            <Redirect to='/login' />
-        }
       </div>
     );
   }
 }
 
-export default SignUp;
+export const mapDispatchToProps = (dispatch) => {
+  return {
+    logInUser: (id, name) => (dispatch(logInUser(id, name)))
+  };
+};
+
+export default withRouter(connect(null, mapDispatchToProps)(SignUp));
+
+SignUp.propTypes = {
+  logInUser: PropTypes.func,
+  history: PropTypes.object
+};

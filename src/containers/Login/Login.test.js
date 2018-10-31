@@ -19,7 +19,7 @@ describe('Login', () => {
       preventDefault: jest.fn()
     };
 
-    mockHistory = [];
+    mockHistory = { push: jest.fn() };
     mockAddAllFavorites = jest.fn();
     wrapper = shallow(<Login 
       handleSubmit={mockHandleSubmit}

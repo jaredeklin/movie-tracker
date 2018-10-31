@@ -1,8 +1,7 @@
 .card-container {
   overflow: scroll;
   width: 100%;
-  position: absolute;
-  top: 165px;
+  position: relative;
 }
 
 .inner-card-container {
@@ -133,10 +132,6 @@
 
 .inner-card-container:hover {
   transform: translate3d(-62.5px, 0, 0);
-}
-
-.inner-card-container:hover .card {
-  opacity: 0.3;
 }
 
 .inner-card-container:hover .card:hover {

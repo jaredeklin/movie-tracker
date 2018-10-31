@@ -1,5 +1,6 @@
 header {
-  width: 100%
+  width: 100%;
+  padding: 20px 0 0 0;;
 }
 
 h1 {
@@ -13,28 +14,49 @@ h1 {
   width: 100%;
 }
 
+.nav-menu {
+  display: flex;
+  justify-content: space-between
+}
+
 #login-logout {
-  position: absolute;
+  /* position: absolute;
   left: 3%;
-  top: 20px;
+  top: 20px; */
+}
+.display-right-corner {
+  text-align: right;
 }
 
 #show-favorites {
-  position: absolute;
+  /* position: absolute;
   left: 88%;
-  top:  20px;
+  top:  20px; */
   width: auto;
 }
 
 #home {
+  /* top: 20px;
   position: absolute;
-  left: 92%;
+  left: 92%; */
   width: auto;
 }
 
 .welcome {
   text-align: center;
   color: #95a5a6;
+  margin: 0;
+  width: max-content;
+}
+
+@media screen and (max-width: 550px) {
+  h1 {
+    font-size: 36px;
+  }
+  
+  .welcome {
+    display: none;
+  }
 }
 
 

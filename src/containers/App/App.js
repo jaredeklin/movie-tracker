@@ -8,7 +8,7 @@ import { loadMovies,
   logOutUser, 
   clearFavoritesLogOut 
 } from '../../actions';
-import SignUp from '../../components/SignUp/SignUp.js';
+import SignUp from '../../containers/SignUp/SignUp.js';
 import { getNowPlaying } from '../../cleaners/getNowPlaying';
 import PropTypes from 'prop-types';
 
@@ -34,16 +34,22 @@ export class App extends Component {
 
     return (
       <div className='nav-menu'>
-        <h3 className='welcome'>
-          {`Hello ${this.props.user.name}. We are tracking you....`}
-        </h3>
-        <NavLink
-          to='/' 
-          id='login-logout'
-          onClick={this.handleLogOut}>
-          Log Out
-        </NavLink>
-        { pathname === '/' ? this.showFavorites() : this.showHome() }
+        <div>
+          <NavLink
+            to='/' 
+            id='login-logout'
+            onClick={this.handleLogOut}>
+            Log Out
+          </NavLink>
+        </div>
+        <div>
+          <h3 className='welcome'>
+            {`Hello ${this.props.user.name}. We are tracking you....`}
+          </h3>
+        </div>
+        <div className="display-right-corner">
+          {pathname === '/' ? this.showFavorites() : this.showHome()}
+        </div>      
       </div>
     );
   };
@@ -79,21 +85,21 @@ export class App extends Component {
           <h1>Movie Tracker</h1>
         </header>
         <Switch>
-          <Route exact path='/' 
-            render={ () => <Home 
-              movies={movies} 
-              favorites={favorites} />} 
+          <Route 
+            exact path='/' 
+            render={() => <Home movies={movies} favorites={favorites} />} 
           />
-          <Route exact path='/login'
+          <Route 
+            exact path='/login'
             component={Login} 
           />
-          <Route exact path='/signup'
+          <Route 
+            exact path='/signup'
             component={SignUp}
           />
-          <Route exact path='/favorites'
-            render={ () => <Home 
-              movies={favorites} 
-              favorites={favorites} />}
+          <Route 
+            exact path='/favorites'
+            render={() => <Home movies={favorites} favorites={favorites} />}
           />
         </Switch>
       </div>
@@ -128,7 +134,13 @@ App.propTypes = {
   ]),
   logOutUser: PropTypes.func,
   clearFavoritesLogOut: PropTypes.func,
-  movies: PropTypes.object,
-  favorites: PropTypes.object
+  movies: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
+  favorites: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ])
 };
 

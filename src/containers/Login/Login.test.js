@@ -8,13 +8,13 @@ jest.mock('../../cleaners/loadAllFavorites');
 
 describe('Login', () => {
   let wrapper, 
-    mockHandleSubmit, 
+    mockLogInUser, 
     mockEvent, 
     mockHistory,
     mockAddAllFavorites;
 
   beforeEach(() => {
-    mockHandleSubmit = jest.fn();
+    mockLogInUser = jest.fn();
     mockEvent = {
       preventDefault: jest.fn()
     };
@@ -22,7 +22,7 @@ describe('Login', () => {
     mockHistory = { push: jest.fn() };
     mockAddAllFavorites = jest.fn();
     wrapper = shallow(<Login 
-      handleSubmit={mockHandleSubmit}
+      logInUser={mockLogInUser}
       history={mockHistory} 
       addAllFavorites={mockAddAllFavorites} />
     );
@@ -76,12 +76,12 @@ describe('Login', () => {
     expect(loadAllFavorites).toHaveBeenCalledWith(id);
   });
 
-  it('should call handleSubmit when redirectUser is called', () => {
+  it('should call logInUser when redirectUser is called', () => {
     const id = '122345';
     const name = 'jared';
 
     wrapper.instance().redirectUser(id, name);
-    expect(mockHandleSubmit).toHaveBeenCalledWith(id, name);
+    expect(mockLogInUser).toHaveBeenCalledWith(id, name);
   });
 
   it('should set state error to true in case of bad response', async () => {
@@ -90,8 +90,8 @@ describe('Login', () => {
       password: 'blobs'
     };
 
-    window.fetch = jest.fn().mockImplementation(() => Promise.reject({
-      status: 500
+    window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
+      ok: false
     }));
 
     await wrapper.instance().logIn(mockData);
@@ -121,8 +121,9 @@ describe('Login', () => {
     const mockDispatch = jest.fn();
     const mapped = mapDispatchToProps(mockDispatch);
 
-    mapped.handleSubmit();
+    mapped.logInUser();
+    mapped.addAllFavorites();
+    
     expect(mockDispatch).toHaveBeenCalled();
   });
-
 });

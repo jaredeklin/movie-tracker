@@ -23,6 +23,12 @@ export class SignUp extends Component {
   handleFetch = async (userInfo) => { 
     try {
       this.setState({ loading: true });
+      const available = await this.checkIfEmailAvailable(userInfo.email);
+
+      if (!available) {
+        throw new Error('Email not available');
+      }
+
       const response = await fetch(`${url}/api/v1/users`, {
         method: "POST",
         body: JSON.stringify(userInfo),
@@ -42,8 +48,14 @@ export class SignUp extends Component {
       this.props.history.push('/');
       
     } catch (error) {
-      this.setState({ signUpError: true });
+      this.setState({ signUpError: true, loading: false });
     }
+  }
+
+  checkIfEmailAvailable = async (email) => {    
+    const response = await fetch(`${url}/api/v1/users/check/${email}`);
+
+    return await response.json();
   }
 
   handleChange = (event) => {

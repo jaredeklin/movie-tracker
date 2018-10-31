@@ -21,29 +21,55 @@ describe('SignUp', () => {
   });
 
   describe('handleFetch', () => {
+    const mockReturn = { name: 'Matt', id: 3 };
+
     it('should call logInUser if response is ok and redirect', async () => {
-      window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
+      window.fetch = jest.fn(() => Promise.resolve({
         ok: true,
-        json: () => Promise.resolve({
-          name: 'Matt',
-          id: 3
-        })
+        json: () => Promise.resolve(mockReturn)
       }));
-  
+      wrapper.instance().checkIfEmailAvailable = jest.fn(() => true);
+
       await wrapper.instance().handleFetch(mockUserData);
+      expect(wrapper.instance().checkIfEmailAvailable).toHaveBeenCalledWith("test@test.com");
       expect(mockLogInUser).toHaveBeenCalledWith(3, 'Matt');
       expect(mockHistory.push).toHaveBeenCalledWith('/');
     });
+
+    it('should throw an error if checkIfEmailAvailable returns false', async () => {
+      window.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(mockReturn)
+      }));
+      wrapper.instance().checkIfEmailAvailable = jest.fn(() => false);
+
+      await wrapper.instance().handleFetch(mockUserData);
+      expect(wrapper.state().signUpError).toEqual(true);
+    });
   
     it('should signUpError state to true if response is bad', async () => {
-      window.fetch = jest.fn().mockImplementation(() => Promise.resolve({
+      window.fetch = jest.fn(() => Promise.resolve({
         ok: false,
         statusText: 'Not Found'
       }));
+      wrapper.instance().checkIfEmailAvailable = jest.fn(() => true);
   
       expect(wrapper.state('signUpError')).toEqual(false);
       await wrapper.instance().handleFetch(mockUserData);
       expect(wrapper.state('signUpError')).toEqual(true);
+    });
+  });
+
+  describe('checkIfEmailAvailable', () => {
+    it('should call fetch with the correct params', () => {
+      window.fetch = jest.fn(() => Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(true)
+      }));
+
+      const expected = 'http://localhost:3000/api/v1/users/check/test@test.com';
+
+      wrapper.instance().checkIfEmailAvailable('test@test.com');
+      expect(window.fetch).toHaveBeenCalledWith(expected);
     });
   });
 

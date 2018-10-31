@@ -86,7 +86,10 @@ export const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
 
 Card.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.array
+  ]),
   favorites: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.array

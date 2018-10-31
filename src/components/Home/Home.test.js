@@ -1,6 +1,6 @@
 import React from 'react';
 import { Home } from './Home';
-import { mockCleanNowPlaying } from '../../cleaners/mockData';
+import { mockCleanNowPlaying, mockFavorites } from '../../cleaners/mockData';
 import { shallow } from 'enzyme';
 
 
@@ -10,7 +10,7 @@ describe('Home', () => {
 
     let wrapper = shallow(<Home 
       movies={mockCleanNowPlaying} 
-      favorites={mockCleanNowPlaying} />);
+      favorites={mockFavorites} />);
 
     expect(wrapper).toMatchSnapshot();
   });
